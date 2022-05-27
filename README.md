@@ -72,4 +72,4 @@ So in the above code you can
 - Clarify the intentions of volatile variable access and ensure use in a safer way
 
 
-So please vote for the idea if you like it (as in the compiler they could detect improper use at compile time for some cases), and in the meantime consider using something like this or these ideas to make your multithreaded code safer.
+So please vote for the idea if you like it (as in the compiler they could use keywords instead of needing these classes.  It may also be able detect some improper use at compile time for some cases), and in the meantime consider using something like this or these ideas to make your multithreaded code safer.
