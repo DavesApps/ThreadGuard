@@ -35,3 +35,34 @@ Example of using the variable after acquiring the lock
                 _tcv.Value = true;
                 
     }
+
+If you use the guarded variable without acquiring the lock first it will throw a configurable exception by default that is GuardFailureException.
+
+With that code it's easy to tell which of your variables need multithreading protection and it will throw an exception when used unprotected.
+These are very lightweight checks, so performance should not be impacted.
+
+ThreadGuard also lets you encode your intentions for a lock free variable accessing via Volatile.Read and Volatile.Write methods.  Normally when you do this many cases you can only have one thread writing to the variable and other threads can read.  Sometimes you only use variables like this to tell a thread to exit - typically the only safe usage is for example defaulting a bool to false like IsDone and setting to true (ideally from one thread- though other variants exist).
+
+You can encode your intentions as follows.
+
+     GuardedVolatileVarBool _tgvvIsDone = new GuardedVolatileVarBool(true);
+     _tgvvIsDone.Value = false;
+
+
+            Thread thread1 = new Thread(() =>
+            {
+                while (_tgvvIsDone.Value)
+                {  //do something here
+                }
+            });
+            thread1.Start();
+            //do something
+            _tgvvIsDone.Value = true; Will cause thread to exit
+            thread1.Join();
+
+
+
+So with this example it's easy to see variable _tgvvIsDone is protected and if it's used inappropriately like writing to the value from multiple threads it will throw an exception.  It also best good practice of volatile variable access.  It will even prevent changing the value to something different if you desire (only allowing one write to the value - i.e. one shot flag is often the safest way to use)
+
+
+So vote for the idea, and in the meantime consider using something like this or these ideas to make your multithreaded code safer.
