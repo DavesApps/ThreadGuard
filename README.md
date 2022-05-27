@@ -62,13 +62,13 @@ You can encode your intentions as follows.
 
 
 
-So with this example it's easy to see variable _tgvvIsDone is protected and if it's used inappropriately like writing to the value from multiple threads it will throw an exception.  It is also best good practice of usint volatile for variable access which it does in that class.  It will even prevent changing the value to something different if you desire (only allowing one write to the value - i.e. one shot flag is often the safest way to use)
+So with this example it's easy to see variable _tgvvIsDone is protected and if it's used inappropriately like writing to the value from multiple threads it will throw an exception.  It is also best practice (in some cases required) to use volatile for variable access which it does in that class.  It will even prevent changing the value to something different if you desire (only allowing one write to the value - i.e. one shot flag is often the safest way to use)
 
 **Summary**
 So in the above code you can
 - Make your intentions clear about the protected variables
 - It's clear which synchronization objects are protecting which variables
-- Detect impropter access of variables without proper synch object acquisition
+- Detect improper access of variables without proper synch object acquisition
 - Clarify the intentions of volatile variable access and ensure use in a safer way
 
 
