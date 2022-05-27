@@ -51,7 +51,7 @@ You can encode your intentions as follows.
 
             Thread thread1 = new Thread(() =>
             {
-                while (_tgvvIsDone.Value)
+                while (!_tgvvIsDone.Value)
                 {  //do something here
                 }
             });
