@@ -1,8 +1,7 @@
 
 # ThreadGuard
 
-This code is based on an idea recommended for C# - this could be done better at the C# and compiler level in some cases so voting might help get this in
-https://github.com/dotnet/csharplang/discussions/892
+This code is based on an idea recommended for C# - this could be done better at the C# and compiler level in some cases so voting might help get this in (GuardedBy feature)  https://github.com/dotnet/csharplang/discussions/892
 
 Multithreaded code is easy to get wrong. A couple of the main concerns are:
 
@@ -19,7 +18,20 @@ This code addresses some areas of problem #1. It does this by helping to make mu
  - Make it easy to visualize protected and unprotected variable access
  - Detect unprotected variable access
 
+This isn't a new idea Java already has something similar.
+
+It's easy to make your multithreaded variable decisions visible and protect your variables from access without the synchronization object being acquired.
+
+Example of creating a Monitor (standard C# lock) and using it to protect a bool variable. You can protect as many variables as you want.
+
+     MonitorGuard _mgc = new MonitorGuard();
+     GuardedVar<bool> _tcv = new GuardedVar<bool>(_mgc);
 
 
+Example of using the variable after acquiring the lock
 
-
+    using (mgc.Acquire())
+    {
+                _tcv.Value = true;
+                
+    }
