@@ -25,7 +25,7 @@ It's easy to make your multithreaded variable decisions visible and protect your
 Example of creating a Monitor (standard C# lock) and using it to protect a bool variable. You can protect as many variables as you want.
 
      MonitorGuard _mgc = new MonitorGuard();
-     GuardedVar<bool> _tcv = new GuardedVar<bool>(_mgc);
+     GuardedVar<bool> _tcv = new GuardedVar<bool>(_mgc); // this variable is guarded by the _mgc monitor/lock
 
 
 Example of using the variable after acquiring the lock
@@ -62,7 +62,13 @@ You can encode your intentions as follows.
 
 
 
-So with this example it's easy to see variable _tgvvIsDone is protected and if it's used inappropriately like writing to the value from multiple threads it will throw an exception.  It also best good practice of volatile variable access.  It will even prevent changing the value to something different if you desire (only allowing one write to the value - i.e. one shot flag is often the safest way to use)
+So with this example it's easy to see variable _tgvvIsDone is protected and if it's used inappropriately like writing to the value from multiple threads it will throw an exception.  It is also best good practice of usint volatile for variable access which it does in that class.  It will even prevent changing the value to something different if you desire (only allowing one write to the value - i.e. one shot flag is often the safest way to use)
+
+**Summary**
+So in the above code you can
+- Make your intentions clear about the protected variables
+- It's clear which synchronization objects are protecting which variables
+- Clarify the intentions of volatile variable access and ensure use in a safer way
 
 
-So vote for the idea, and in the meantime consider using something like this or these ideas to make your multithreaded code safer.
+So please vote for the idea if you like it (as in the compiler they could detect improper use at compile time for some cases), and in the meantime consider using something like this or these ideas to make your multithreaded code safer.
