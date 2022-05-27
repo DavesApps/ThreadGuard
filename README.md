@@ -68,6 +68,7 @@ So with this example it's easy to see variable _tgvvIsDone is protected and if i
 So in the above code you can
 - Make your intentions clear about the protected variables
 - It's clear which synchronization objects are protecting which variables
+- Detect impropter access of variables without proper synch object acquisition
 - Clarify the intentions of volatile variable access and ensure use in a safer way
 
 
